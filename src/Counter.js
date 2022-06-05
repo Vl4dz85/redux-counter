@@ -1,14 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useSelector } from 'react-redux';
 import { decrement, increment, set } from './actions';
 import { SetCounter } from './SetCounter';
+import { useActions } from './use-actions';
 
 export const Counter = () => {
   const incident = 'Incident';
   const count = useSelector((state) => state.count);
-  const dispatch = useDispatch();
-
-  const actions = bindActionCreators({ increment, decrement, set }, dispatch);
+  const actions = useActions({
+    increment,
+    decrement,
+    set
+  });
 
   return (
     <main className="Counter">
@@ -16,8 +18,8 @@ export const Counter = () => {
       <p className="count">{count}</p>
       <section className="controls">
         <button onClick={() => actions.increment()}>Increment</button>
-        <button onClick={() => actions.decrement()}>Reset</button>
-        <button onClick={() => actions.set(count)}>Decrement</button>
+        <button onClick={() => actions.set(0)}>Reset</button>
+        <button onClick={() => actions.decrement(count)}>Decrement</button>
       </section>
       <SetCounter />
     </main>
